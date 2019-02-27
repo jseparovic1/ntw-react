@@ -1,0 +1,7 @@
+.product:hover {
+    transition: border .3s ease-in;
+}
+
+.product:hover {
+    border: 1px solid red;
+}
