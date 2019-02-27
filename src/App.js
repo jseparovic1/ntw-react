@@ -65,7 +65,8 @@ class App extends Component {
     });
 
     this.setState({
-      products: this.recalculateAverage(productsWithRating)
+      products: this.recalculateAverage(productsWithRating),
+      whislist: this.recalculateAverage(this.state.whislist)
     });
   }
 
@@ -74,14 +75,13 @@ class App extends Component {
   }
 
   addToWhishlistHandler(favoritedProduct) {
-    console.log("TO WISHLIST BAYBY!");
     if (this.isProductInWishlist(favoritedProduct)) {
       return this.removeFromWhislitHandler(favoritedProduct.id);
     }
 
     let newWhislist = [];
 
-    newWhislist.push(favoritedProduct, ...this.state.whislist);
+    newWhislist.push(...this.state.whislist, favoritedProduct);
 
     this.setState({
       whislist: newWhislist
@@ -89,8 +89,6 @@ class App extends Component {
   }
 
   removeFromWhislitHandler(productId) {
-    console.log("Removing from whislist");
-
     let newWhislist = this.state.whislist.filter(p => p.id !== productId);
 
     this.setState({
@@ -100,7 +98,6 @@ class App extends Component {
 
   productSearchHandler(term) {
     if (term.length < 1) {
-      console.log("resseting");
       return this.fetchProducts();
     }
 

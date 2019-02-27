@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "../Components/Header/Header";
+import Footer from "../Components/Footer/Footer";
 import ProductList from "../Components/ProductList/ProductList";
 import Whislist from "../Components/Whislist/Whishlist";
 
@@ -32,6 +33,7 @@ class Home extends Component {
             </div>
           </div>
         </div>
+        <Footer/>
       </>
     );
   }

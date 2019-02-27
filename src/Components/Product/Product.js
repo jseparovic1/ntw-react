@@ -30,7 +30,7 @@ export default class Product extends Component {
                 </button>
                 <div className="ml-4 d-flex">
                   <StarRatingComponent
-                    name="rate"
+                    name={this.props.product.id}
                     starCount={5}
                     onStarClick={ratingValue => this.props.addRatingHandler(ratingValue, this.props.product)}
                   />
