@@ -45,7 +45,7 @@ class Details extends Component {
 
   render() {
     let productRender;
-    console.log(this.state);
+
     if (!this.state.searching) {
       productRender = (
         <Product

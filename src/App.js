@@ -45,7 +45,6 @@ class App extends Component {
   }
 
   addRatingHandler(ratingValue, ratedProduct) {
-    console.log("ADDING RATING!");
     ratedProduct.reviews.push({
       id: Math.random()
         .toString(36)
@@ -132,6 +131,7 @@ class App extends Component {
             render={() => (
               <Home
                 state={this.state}
+                products={this.state.products}
                 productSearchHandler={this.productSearchHandler.bind(this)}
                 isProductInWishlist={this.isProductInWishlist.bind(this)}
                 addRatingHandler={this.addRatingHandler.bind(this)}

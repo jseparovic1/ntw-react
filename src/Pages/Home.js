@@ -14,7 +14,7 @@ class Home extends Component {
             <div className="col-md-8 order-2 order-md-1">
               <ProductList
                 isProductInWishlist={this.props.isProductInWishlist}
-                products={this.props.state.products}
+                products={this.props.products}
                 addToWhishlistHandler={this.props.addToWhishlistHandler}
                 addRatingHandler={this.props.addRatingHandler}
                 onDetailsClickHandler={this.props.onDetailsClickHandler}
