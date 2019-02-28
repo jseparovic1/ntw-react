@@ -5,11 +5,6 @@ import ProductList from "../Components/ProductList/ProductList";
 import Whislist from "../Components/Whislist/Whishlist";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <>

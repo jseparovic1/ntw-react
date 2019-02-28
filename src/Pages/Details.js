@@ -1,78 +1,93 @@
 import React, { Component } from "react";
 import "../App.css";
 import Header from "../Components/Header/Header";
-import StarRatingComponent from "react-star-rating-component";
+import Footer from "../Components/Footer/Footer";
+import Product from "../Components/Product/Product";
+import ProductList from "../Components/ProductList/ProductList";
+import Whislist from "../Components/Whislist/Whishlist";
 
 class Details extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      searching: false
+    };
+
+    if (!('displayProduct' in this.state)) {
+      let productToDisplay = this.props.state.products
+        .filter(product => {
+          return product.id === this.props.state.displayProduct;
+        })
+        .shift();
+      
+      this.state = {
+        ...this.state,
+        displayProduct: productToDisplay
+      };
+    }
+  }
+
+  productSearchTypeHandler(searchQuery) {
+    if (searchQuery.length < 1) {
+      this.props.productSearchHandler(searchQuery);
+
+      return this.setState({
+        searching: false
+      });
+    }
+
+    this.props.productSearchHandler(searchQuery);
+
+    this.setState({
+      searching: true
+    });
   }
 
   render() {
-    console.log(this.props);
-
-    let displayProduct = this.props.state.products.filter(product => {
-      return product.id === this.props.state.displayProduct;
-    });
-
-    let product = displayProduct[0];
-
-    let reviews = product.reviews.map(review => {
-      return (
-        <div className="mb-4 d-flex p-10" key={review.id}>
-          <div className="d-flex flex-column justify-content-between align-items-center mr-5 w-25">
-            <img
-              className="w-50"
-              alt="Avatar"
-              src={"https://www.gravatar.com/avatar/" + review.id}
-            />
-            <span className="text-muted">{review.username}</span>
-          </div>
-          <div className="d-flex flex-column justify-content-between">
-            <h2>{review.title}</h2>
-            <div>
-              <StarRatingComponent
-                name="rate1"
-                starCount={5}
-                value={review.rating}
-                editing={false}
-              />
-            </div>
-            <p>{review.text}</p>
-          </div>
-        </div>
+    let productRender;
+    console.log(this.state);
+    if (!this.state.searching) {
+      productRender = (
+        <Product
+          product={this.state.displayProduct}
+          inWishList={this.props.isProductInWishlist(this.state.displayProduct)}
+          addToWhishlistHandler={this.props.addToWhishlistHandler}
+          addRatingHandler={this.props.addRatingHandler}
+          onDetailsClickHandler={this.props.onDetailsClickHandler}
+          withReviews={true}
+        />
       );
-    });
+    } else {
+      productRender = (
+        <ProductList
+          isProductInWishlist={this.props.isProductInWishlist}
+          products={this.props.state.products}
+          addToWhishlistHandler={this.props.addToWhishlistHandler}
+          addRatingHandler={this.props.addRatingHandler}
+          onDetailsClickHandler={this.props.onDetailsClickHandler}
+        />
+      );
+    }
 
     return (
       <>
-        <Header />
-        <div className="d-flex justify-content-center">
-          <div className="col-10 mt-2">
-            <div className="card mb-4 box-shadow">
-              <img src={product.picture} alt="Product" />
-              <div className="card-body">
-                <h5 className="card-title">{product.name}</h5>
-                <p className="card-text">{product.description}</p>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="d-flex align-items-center">
-                    <span className="mr-2">{product.rating}</span> 
-                    <StarRatingComponent
-                      name="rate"
-                      starCount={5}
-                      value={product.rating}
-                    />
-                  </div>
-                </div>
-              </div>
+        <Header
+          productSearchHandler={searchQuery =>
+            this.productSearchTypeHandler(searchQuery)
+          }
+        />
+        <div className="container">
+          <div className="row flex">
+            <div className="col-md-8 order-2 order-md-1">{productRender}</div>
+            <div className="col-md-4 order-1 order-md-2">
+              <Whislist
+                products={this.props.state.whislist}
+                addToWhislistHandler={this.props.addToWhislistHandler}
+              />
             </div>
           </div>
         </div>
-
-        <div className="d-flex justify-content-center">
-          <div className="col-10 mt-5">{reviews}</div>
-        </div>
+        <Footer />
       </>
     );
   }

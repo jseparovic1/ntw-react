@@ -97,6 +97,8 @@ class App extends Component {
   }
 
   productSearchHandler(term) {
+    console.log(term);
+
     if (term.length < 1) {
       return this.fetchProducts();
     }
@@ -144,6 +146,7 @@ class App extends Component {
             render={() => (
               <Details
                 state={this.state}
+                productSearchHandler={this.productSearchHandler.bind(this)}
                 addRatingHandler={this.addRatingHandler.bind(this)}
                 addToWhishlistHandler={this.addToWhishlistHandler.bind(this)}
                 isProductInWishlist={this.isProductInWishlist.bind(this)}
